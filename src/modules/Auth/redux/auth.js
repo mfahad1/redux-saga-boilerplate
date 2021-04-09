@@ -24,7 +24,7 @@ export const registerRequest = (payload) => ({
 });
 
 const authReducer = (
-  state = { login: false, register: false },
+  state = { login: null, register: null },
   { type, payload },
 ) => {
   switch (type) {

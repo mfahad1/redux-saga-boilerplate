@@ -1,11 +1,11 @@
-import { put, call, takeEvery, fork } from 'redux-saga/effects';
+import { put, call, takeEvery, all } from 'redux-saga/effects';
 import { login } from '../../../services/api-services/auth';
-import { LOGIN_REQUEST } from './auth';
+import { LOGIN_REQUEST, loginSuccess } from './auth';
 
 function* loginSaga(action) {
   try {
-    const response = yield call(login(action.payload));
-    yield put(login(response.data));
+    const response = yield call(login, action.payload);
+    yield put(loginSuccess(response));
   } catch (error) {
     console.log(error);
   }
@@ -16,5 +16,5 @@ function* watchLoginSaga() {
 }
 
 export default function* rootSaga() {
-  yield [fork(loginSaga, watchLoginSaga)];
+  yield all([call(watchLoginSaga)]);
 }

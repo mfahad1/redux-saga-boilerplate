@@ -1,6 +1,6 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { fork } from 'redux-saga/effects';
+import { all, call } from 'redux-saga/effects';
 import auth from '../modules/Auth/redux/auth';
 import authSaga from '../modules/Auth/redux/saga';
 
@@ -19,7 +19,7 @@ export default createStore(
 );
 
 function* rootSaga() {
-  yield [fork(authSaga)];
+  yield all([call(authSaga)]);
 }
 
 sagaMiddleware.run(rootSaga);

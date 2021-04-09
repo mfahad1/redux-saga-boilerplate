@@ -1,8 +1,11 @@
-import { Avatar, Button, Checkbox, FormControlLabel, TextField, Typography } from '@material-ui/core';
+import { Avatar, Button, Typography } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { Formik, Form as FormikForm } from 'formik';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
+import { InputField } from '../../shared/formik/Input';
 
 import useStyles from './Auth.style';
 import { loginRequested } from './redux/auth';
@@ -12,12 +15,25 @@ export default function LoginContainer() {
   const dispatcher = useDispatch();
   const loginState = useSelector((state) => state.auth.login);
   const history = useHistory();
-  console.log({ loginState });
+
+  const initialValues = {
+    email: '',
+    password: '',
+  };
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email().required('Required').label('Email'),
+    password: Yup.string().required('Required').label('Password'),
+  });
+
   useEffect(() => {
     if (loginState) {
       history.push('/dashboard');
     }
   }, [loginState]);
+
+  const onSubmit = (values) => {
+    dispatcher(loginRequested(values));
+  };
 
   return (
     <div className={classes.paper}>
@@ -27,43 +43,49 @@ export default function LoginContainer() {
       <Typography component="h1" variant="h5">
         Log In
       </Typography>
-      <form className={classes.form} noValidate>
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
-          autoFocus
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-        />
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
-        />
-        <Button
-          onClick={() => dispatcher(loginRequested({ name: 'user@yopmail.com', password: 'asdasd' }))}
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
+      <div className={classes.form}>
+
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
         >
-          Log In
-        </Button>
-      </form>
+          <FormikForm>
+            <InputField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            <InputField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              type="submit"
+            >
+              Login
+            </Button>
+          </FormikForm>
+        </Formik>
+
+      </div>
     </div>
   );
 }
