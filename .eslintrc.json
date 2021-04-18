@@ -28,6 +28,13 @@
         "no-unused-vars": 1,
         "import/prefer-default-export": 0,
         "implicit-arrow-linebreak": 0,
-        "react/jsx-props-no-spreading": 0
+        "react/jsx-props-no-spreading": 0,
+        "operator-linebreak": "off",
+        "no-param-reassign": ["error", {
+            "props": true,
+            "ignorePropertyModificationsFor": ["state"]
+        }],
+        "function-paren-newline": "off"
+
     }
 }

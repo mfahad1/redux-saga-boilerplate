@@ -1,40 +1,40 @@
-export const LOGIN_REQUEST = 'auth/LOGIN_REQUEST';
-const LOGIN_SUCCESS = 'auth/LOGIN_SUCCESS';
-export const REGISTER_REQUEST = 'auth/REGISTER_REQUEST';
-const REGISTER_SUCCESS = 'auth/REGISTER_SUCCESS';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { loginService } from '../../../services/api-services/auth';
 
-export const loginSuccess = (payload) => ({
-  type: LOGIN_SUCCESS,
-  payload,
+const LOGIN = 'auth/LOGIN';
+
+export const loginAction = createAsyncThunk(LOGIN, async (loginPayload) =>
+  loginService(loginPayload),
+);
+
+const authSlice = createSlice({
+  name: 'auth',
+  initialState: {
+    login: null,
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    // standard reducer logic, with auto-generated action types per reducer
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginAction.fulfilled, (state, action) => {
+        state.error = null;
+        state.login = action.payload;
+        state.loading = false;
+      })
+      .addCase(loginAction.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.login = null;
+      })
+      .addCase(loginAction.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error;
+        state.login = null;
+      });
+  },
 });
 
-export const loginRequested = (payload) => ({
-  type: LOGIN_REQUEST,
-  payload,
-});
-
-export const registerSuccess = (payload) => ({
-  type: REGISTER_SUCCESS,
-  payload,
-});
-
-export const registerRequest = (payload) => ({
-  type: REGISTER_REQUEST,
-  payload,
-});
-
-const authReducer = (
-  state = { login: null, register: null },
-  { type, payload },
-) => {
-  switch (type) {
-    case LOGIN_SUCCESS:
-      return { ...state, login: payload };
-    case REGISTER_SUCCESS:
-      return { ...state, register: payload };
-    default:
-      return state;
-  }
-};
-
-export default authReducer;
+export default authSlice.reducer;

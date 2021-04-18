@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import { InputField } from '../../shared/formik/Input';
 
 import useStyles from './Auth.style';
-import { loginSuccess } from './redux/auth';
+import { loginAction } from './redux/auth';
 
 export default function LoginContainer() {
   const classes = useStyles();
@@ -32,7 +32,7 @@ export default function LoginContainer() {
   }, [loginState]);
 
   const onSubmit = (values) => {
-    dispatcher(loginSuccess({ userId: 'asd', role: 'admin' }));
+    dispatcher(loginAction(values));
   };
 
   return (
