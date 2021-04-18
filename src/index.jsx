@@ -4,7 +4,7 @@ import 'typeface-roboto';
 import './index.scss';
 import { Provider } from 'react-redux';
 import { CssBaseline } from '@material-ui/core';
-import App from './App/App';
+import App from './App/app';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store';
 

@@ -1,7 +1,7 @@
 import { Avatar, Button, Checkbox, FormControlLabel, TextField, Typography } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
-import useStyles from './Auth.style';
+import useStyles from './auth.style';
 
 export default function LoginContainer() {
   const classes = useStyles();

@@ -5,9 +5,9 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
-import { InputField } from '../../shared/formik/Input';
+import { InputField } from '../../shared/formik/input';
 
-import useStyles from './Auth.style';
+import useStyles from './auth.style';
 import { loginAction } from './redux/auth';
 
 export default function LoginContainer() {

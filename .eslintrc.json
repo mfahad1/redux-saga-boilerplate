@@ -34,7 +34,8 @@
             "props": true,
             "ignorePropertyModificationsFor": ["state"]
         }],
-        "function-paren-newline": "off"
+        "function-paren-newline": "off",
+        "react/forbid-prop-types": 0
 
     }
 }

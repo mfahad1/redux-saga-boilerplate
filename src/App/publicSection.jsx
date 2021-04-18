@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import DefaultPNG from '../assets/images/default.jpg';
 
-import useStyles from './PublicSection.style';
+import useStyles from './publicSection.style';
 
 export default function PublicSection({ children }) {
   const classes = useStyles();
@@ -26,7 +26,15 @@ export default function PublicSection({ children }) {
       <Grid item xs={false} sm={4} md={7}>
         <img alt="loading..." src={DefaultPNG} className={classes.image} />
       </Grid>
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid
+        item
+        xs={12}
+        sm={8}
+        md={5}
+        component={Paper}
+        elevation={6}
+        square
+      >
         {children}
       </Grid>
     </Grid>

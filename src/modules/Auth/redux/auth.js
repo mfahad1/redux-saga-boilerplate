@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import localStorageService from '../../../helpers/localStorageService';
 import { loginService } from '../../../services/api-services/auth';
 
 const LOGIN = 'auth/LOGIN';
@@ -10,7 +11,8 @@ export const loginAction = createAsyncThunk(LOGIN, async (loginPayload) =>
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    login: null,
+    // here decode user and save it in context.
+    login: localStorageService.get('token'),
     loading: false,
     error: null,
   },
